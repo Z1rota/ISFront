@@ -1,0 +1,25 @@
+.location-form {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(120px, 1fr));
+
+  gap: 16px;
+
+  min-width: 520px;
+
+  padding-top: 8px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+@media (max-width: 650px) {
+
+  .location-form {
+    grid-template-columns: 1fr;
+    min-width: unset;
+  }
+
+}

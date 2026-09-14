@@ -1,0 +1,30 @@
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+
+  color-scheme: dark;
+
+  font-family:
+    Roboto,
+    "Helvetica Neue",
+    sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color:
+    var(--mat-sys-error-container);
+
+  --mdc-snackbar-supporting-text-color:
+    var(--mat-sys-on-error-container);
+
+  --mat-snack-bar-button-color:
+    var(--mat-sys-error);
+}

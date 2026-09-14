@@ -1,0 +1,123 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Locations</h1>
+
+      <p class="subtitle">
+        Manage locations used by persons
+      </p>
+    </div>
+
+    <button
+      mat-flat-button
+      class="create-button"
+      (click)="openCreateDialog()"
+    >
+      Create location
+    </button>
+
+  </div>
+
+
+  <div class="table-card">
+
+    @if (loading) {
+
+      <div class="state-message">
+        Loading locations...
+      </div>
+
+    } @else if (locations.length === 0) {
+
+      <div class="state-message">
+
+        <div class="empty-title">
+          No locations found
+        </div>
+
+        <div class="empty-description">
+          Create a location to use it when creating a person.
+        </div>
+
+      </div>
+
+    } @else {
+
+      <div class="table-wrapper">
+
+        <table class="location-table">
+
+          <thead>
+
+            <tr>
+              <th>ID</th>
+              <th>X</th>
+              <th>Y</th>
+              <th>Z</th>
+
+              <th class="actions-header">
+                Actions
+              </th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              location of locations;
+              track location.id
+            ) {
+
+              <tr>
+
+                <td class="id-cell">
+                  {{ location.id }}
+                </td>
+
+                <td>
+                  {{ location.x }}
+                </td>
+
+                <td>
+                  {{ location.y }}
+                </td>
+
+                <td>
+                  {{ location.z }}
+                </td>
+
+                <td>
+
+                  <div class="actions">
+
+                    <button
+                      mat-button
+                      class="delete-button"
+                      (click)="deleteLocation(location)"
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

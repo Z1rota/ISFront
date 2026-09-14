@@ -1,0 +1,265 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Persons</h1>
+
+      <p class="subtitle">
+        Manage persons and their related objects
+      </p>
+    </div>
+
+    <button
+      mat-flat-button
+      class="create-button"
+      (click)="openCreateDialog()"
+    >
+      Create person
+    </button>
+
+  </div>
+
+
+  <div class="toolbar">
+
+    <mat-form-field
+      appearance="outline"
+      class="filter-field"
+      subscriptSizing="dynamic"
+    >
+
+      <mat-label>Filter by name</mat-label>
+
+      <input
+        matInput
+        [(ngModel)]="nameFilter"
+        (keyup.enter)="applyFilter()"
+        placeholder="Exact name"
+      >
+
+    </mat-form-field>
+
+
+    <button
+      mat-flat-button
+      (click)="applyFilter()"
+    >
+      Filter
+    </button>
+
+
+    <button
+      mat-button
+      (click)="clearFilter()"
+      [disabled]="!nameFilter"
+    >
+      Clear
+    </button>
+
+  </div>
+
+
+  <div class="table-card">
+
+    @if (loading) {
+
+      <div class="state-message">
+        Loading persons...
+      </div>
+
+    } @else if (persons.length === 0) {
+
+      <div class="state-message">
+
+        <div class="empty-title">
+          No persons found
+        </div>
+
+        <div class="empty-description">
+          Try changing the filter or create a new person.
+        </div>
+
+      </div>
+
+    } @else {
+
+      <div class="table-wrapper">
+
+        <table class="person-table">
+
+          <thead>
+            <tr>
+
+              <th>ID</th>
+
+              <th
+                class="sortable"
+                (click)="sortByName()"
+              >
+                <div class="sortable-header">
+
+                  <span>Name</span>
+
+                  <span class="sort-icon">
+                    {{ direction === 'asc' ? '↑' : '↓' }}
+                  </span>
+
+                </div>
+              </th>
+
+              <th>Coordinates X</th>
+              <th>Coordinates Y</th>
+
+              <th>Creation date</th>
+
+              <th>Eye color</th>
+              <th>Hair color</th>
+
+              <th>Location X</th>
+              <th>Location Y</th>
+              <th>Location Z</th>
+
+              <th>Height</th>
+
+              <th>Nationality</th>
+
+              <th class="actions-header">
+                Actions
+              </th>
+
+            </tr>
+          </thead>
+
+
+          <tbody>
+
+            @for (person of persons; track person.id) {
+
+              <tr>
+
+                <td class="id-cell">
+                  {{ person.id }}
+                </td>
+
+                <td class="name-cell">
+                  {{ person.name }}
+                </td>
+
+                <td>
+                  {{ person.coordinates.x }}
+                </td>
+
+                <td>
+                  {{ person.coordinates.y }}
+                </td>
+
+                <td class="date-cell">
+                  {{
+                    person.creationDate
+                      | date:'dd.MM.yyyy HH:mm'
+                  }}
+                </td>
+
+                <td>
+                  @if (person.eyeColor) {
+                    <span class="value-chip">
+                      {{ person.eyeColor }}
+                    </span>
+                  } @else {
+                    <span class="null-value">
+                      —
+                    </span>
+                  }
+                </td>
+
+                <td>
+                  <span class="value-chip">
+                    {{ person.hairColor }}
+                  </span>
+                </td>
+
+                <td>
+                  {{ person.location.x }}
+                </td>
+
+                <td>
+                  {{ person.location.y }}
+                </td>
+
+                <td>
+                  {{ person.location.z }}
+                </td>
+
+                <td>
+                  {{ person.height }}
+                </td>
+
+                <td>
+                  @if (person.nationality) {
+                    <span class="value-chip">
+                      {{ person.nationality }}
+                    </span>
+                  } @else {
+                    <span class="null-value">
+                      —
+                    </span>
+                  }
+                </td>
+
+                <td>
+
+                  <div class="actions">
+
+                        <button
+                            mat-button
+                            (click)="openViewDialog(person)"
+                        >
+                            View
+                        </button>
+
+                        <button
+                            mat-stroked-button
+                            (click)="openEditDialog(person)"
+                        >
+                            Edit
+                        </button>
+
+                        <button
+                            mat-button
+                            class="delete-button"
+                            (click)="deletePerson(person)"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageIndex]="page"
+      [pageSize]="size"
+      [pageSizeOptions]="[5, 10, 20, 50]"
+      [showFirstLastButtons]="true"
+      (page)="onPageChange($event)"
+    >
+    </mat-paginator>
+
+  </div>
+
+</div>

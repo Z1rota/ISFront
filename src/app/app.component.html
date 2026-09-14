@@ -1,0 +1,47 @@
+<mat-toolbar class="app-toolbar">
+
+  <div class="brand">
+    Информационные Системы
+  </div>
+
+  <nav class="navigation">
+
+    <a
+      mat-button
+      routerLink="/persons"
+      routerLinkActive="active-link"
+    >
+      Persons
+    </a>
+
+    <a
+      mat-button
+      routerLink="/coordinates"
+      routerLinkActive="active-link"
+    >
+      Coordinates
+    </a>
+
+    <a
+      mat-button
+      routerLink="/locations"
+      routerLinkActive="active-link"
+    >
+      Locations
+    </a>
+
+    <a
+      mat-button
+      routerLink="/special"
+      routerLinkActive="active-link"
+    >
+      Special operations
+    </a>
+
+  </nav>
+
+</mat-toolbar>
+
+<main>
+  <router-outlet />
+</main>

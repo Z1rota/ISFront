@@ -1,0 +1,118 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Coordinates</h1>
+
+      <p class="subtitle">
+        Manage coordinates used by persons
+      </p>
+    </div>
+
+    <button
+      mat-flat-button
+      class="create-button"
+      (click)="openCreateDialog()"
+    >
+      Create coordinates
+    </button>
+
+  </div>
+
+
+  <div class="table-card">
+
+    @if (loading) {
+
+      <div class="state-message">
+        Loading coordinates...
+      </div>
+
+    } @else if (coordinates.length === 0) {
+
+      <div class="state-message">
+
+        <div class="empty-title">
+          No coordinates found
+        </div>
+
+        <div class="empty-description">
+          Create coordinates to use them when creating a person.
+        </div>
+
+      </div>
+
+    } @else {
+
+      <div class="table-wrapper">
+
+        <table class="coordinates-table">
+
+          <thead>
+
+            <tr>
+              <th>ID</th>
+              <th>X</th>
+              <th>Y</th>
+
+              <th class="actions-header">
+                Actions
+              </th>
+            </tr>
+
+          </thead>
+
+
+          <tbody>
+
+            @for (
+              coordinate of coordinates;
+              track coordinate.id
+            ) {
+
+              <tr>
+
+                <td class="id-cell">
+                  {{ coordinate.id }}
+                </td>
+
+                <td>
+                  {{ coordinate.x }}
+                </td>
+
+                <td>
+                  {{ coordinate.y }}
+                </td>
+
+                <td>
+
+                  <div class="actions">
+
+                    <button
+                      mat-button
+                      class="delete-button"
+                      (click)="deleteCoordinates(coordinate)"
+                    >
+                      Delete
+                    </button>
+
+                  </div>
+
+                </td>
+
+              </tr>
+
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

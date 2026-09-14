@@ -1,0 +1,78 @@
+<h2 mat-dialog-title>
+  Create coordinates
+</h2>
+
+<mat-dialog-content>
+
+  <form
+    [formGroup]="form"
+    class="coordinates-form"
+  >
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>X</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="x"
+      >
+
+      @if (
+        form.get('x')?.touched &&
+        form.get('x')?.hasError('required')
+      ) {
+        <mat-error>
+          X is required
+        </mat-error>
+      }
+
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>Y</mat-label>
+
+      <input
+        matInput
+        type="number"
+        formControlName="y"
+      >
+
+      @if (
+        form.get('y')?.touched &&
+        form.get('y')?.hasError('required')
+      ) {
+        <mat-error>
+          Y is required
+        </mat-error>
+      }
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="cancel()"
+  >
+    Cancel
+  </button>
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="save()"
+  >
+    Create
+  </button>
+
+</mat-dialog-actions>

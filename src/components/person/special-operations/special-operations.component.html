@@ -1,0 +1,380 @@
+<div class="page">
+
+  <div class="page-header">
+
+    <div>
+      <h1>Special operations</h1>
+
+      <p class="subtitle">
+        Execute special operations definited in my Lab Variant
+      </p>
+    </div>
+
+  </div>
+
+
+  <div class="operations-grid">
+
+
+    <mat-card class="operation-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Delete by nationality
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Delete one arbitrary person with the selected nationality
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="operation-content">
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+
+            <mat-label>Nationality</mat-label>
+
+            <mat-select
+              [(ngModel)]="selectedNationality"
+            >
+
+              @for (
+                country of countries;
+                track country
+              ) {
+
+                <mat-option [value]="country">
+                  {{ country }}
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <button
+            mat-flat-button
+            class="danger-button"
+            [disabled]="!selectedNationality"
+            (click)="deleteByNationality()"
+          >
+            Delete person
+          </button>
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- MIN HEIGHT -->
+
+    <mat-card class="operation-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Minimum height
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Return one person with the minimum height
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="operation-content">
+
+          <button
+            mat-flat-button
+            (click)="getMinHeightPerson()"
+          >
+            Find person
+          </button>
+
+
+          @if (minHeightPerson) {
+
+            <div class="result-box">
+
+              <div class="result-title">
+                {{ minHeightPerson.name }}
+              </div>
+
+              <div class="result-row">
+                <span>ID</span>
+                <strong>
+                  {{ minHeightPerson.id }}
+                </strong>
+              </div>
+
+              <div class="result-row">
+                <span>Height</span>
+                <strong>
+                  {{ minHeightPerson.height }}
+                </strong>
+              </div>
+
+              <div class="result-row">
+                <span>Nationality</span>
+                <strong>
+                  {{ minHeightPerson.nationality ?? 'None' }}
+                </strong>
+              </div>
+
+              <div class="result-row">
+                <span>Hair color</span>
+                <strong>
+                  {{ minHeightPerson.hairColor }}
+                </strong>
+              </div>
+
+            </div>
+
+          }
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- GROUP BY NATIONALITY -->
+
+    <mat-card class="operation-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Group by nationality
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Count persons in every nationality group
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="operation-content">
+
+          <button
+            mat-flat-button
+            (click)="groupByNationality()"
+          >
+            Calculate
+          </button>
+
+
+          @if (nationalityGroups.length > 0) {
+
+            <div class="groups">
+
+              @for (
+                group of nationalityGroups;
+                track group.nationality
+              ) {
+
+                <div class="group-row">
+
+                  <span class="group-name">
+                    {{ group.nationality ?? 'No nationality' }}
+                  </span>
+
+                  <span class="count-chip">
+                    {{ group.count }}
+                  </span>
+
+                </div>
+
+              }
+
+            </div>
+
+          }
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- HAIR COLOR PERCENTAGE -->
+
+    <mat-card class="operation-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Hair color percentage
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Percentage of persons with the selected hair color
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="operation-content">
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+
+            <mat-label>Hair color</mat-label>
+
+            <mat-select
+              [(ngModel)]="selectedHairColor"
+            >
+
+              @for (
+                color of colors;
+                track color
+              ) {
+
+                <mat-option [value]="color">
+                  {{ color }}
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <button
+            mat-flat-button
+            [disabled]="!selectedHairColor"
+            (click)="getHairColorPercentage()"
+          >
+            Calculate
+          </button>
+
+
+          @if (hairColorPercentage !== null) {
+
+            <div class="big-result">
+
+              {{
+                hairColorPercentage
+                  | number:'1.0-2'
+              }}%
+
+              <span>
+                of the population
+              </span>
+
+            </div>
+
+          }
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+
+    <!-- EYE COLOR COUNT -->
+
+    <mat-card class="operation-card">
+
+      <mat-card-header>
+
+        <mat-card-title>
+          Eye color count
+        </mat-card-title>
+
+        <mat-card-subtitle>
+          Count persons with the selected eye color
+        </mat-card-subtitle>
+
+      </mat-card-header>
+
+
+      <mat-card-content>
+
+        <div class="operation-content">
+
+          <mat-form-field
+            appearance="outline"
+            subscriptSizing="dynamic"
+          >
+
+            <mat-label>Eye color</mat-label>
+
+            <mat-select
+              [(ngModel)]="selectedEyeColor"
+            >
+
+              @for (
+                color of colors;
+                track color
+              ) {
+
+                <mat-option [value]="color">
+                  {{ color }}
+                </mat-option>
+
+              }
+
+            </mat-select>
+
+          </mat-form-field>
+
+
+          <button
+            mat-flat-button
+            [disabled]="!selectedEyeColor"
+            (click)="getEyeColorCount()"
+          >
+            Count
+          </button>
+
+
+          @if (eyeColorCount !== null) {
+
+            <div class="big-result">
+
+              {{ eyeColorCount }}
+
+              <span>
+                persons
+              </span>
+
+            </div>
+
+          }
+
+        </div>
+
+      </mat-card-content>
+
+    </mat-card>
+
+  </div>
+
+</div>

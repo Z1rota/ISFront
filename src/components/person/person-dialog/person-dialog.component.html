@@ -1,0 +1,361 @@
+<div class="dialog-header">
+
+  <div>
+    <h2 mat-dialog-title>
+      {{ isEdit ? 'Edit person' : 'Create person' }}
+    </h2>
+
+    <p class="dialog-subtitle">
+      {{
+        isEdit
+          ? 'Change person information'
+          : 'Fill in the information about a new person'
+      }}
+    </p>
+  </div>
+
+</div>
+
+
+<mat-dialog-content>
+
+  @if (loadingReferences) {
+
+    <div class="loading-container">
+
+      <mat-spinner diameter="36"></mat-spinner>
+
+      <span>
+        Loading coordinates and locations...
+      </span>
+
+    </div>
+
+  } @else if (referencesLoadFailed) {
+
+    <div class="load-error">
+
+      <div class="load-error-title">
+        Failed to load related objects
+      </div>
+
+      <div class="load-error-description">
+        Coordinates or locations could not be loaded.
+      </div>
+
+      <button
+        mat-stroked-button
+        type="button"
+        (click)="loadReferences()"
+      >
+        Try again
+      </button>
+
+    </div>
+
+  } @else {
+
+    <form
+      [formGroup]="form"
+      class="person-form"
+    >
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Name</mat-label>
+
+        <input
+          matInput
+          formControlName="name"
+          placeholder="Enter name"
+        >
+
+        @if (
+          form.get('name')?.touched &&
+          form.get('name')?.hasError('required')
+        ) {
+          <mat-error>
+            Name is required
+          </mat-error>
+        } @else if (
+          form.get('name')?.touched &&
+          form.get('name')?.hasError('blank')
+        ) {
+          <mat-error>
+            Name cannot contain only spaces
+          </mat-error>
+        }
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Height</mat-label>
+
+        <input
+          matInput
+          type="number"
+          formControlName="height"
+          placeholder="180"
+        >
+
+        @if (
+          form.get('height')?.touched &&
+          form.get('height')?.hasError('required')
+        ) {
+          <mat-error>
+            Height is required
+          </mat-error>
+        }
+
+        @if (
+          form.get('height')?.touched &&
+          form.get('height')?.hasError('positive')
+        ) {
+          <mat-error>
+            Height must be greater than 0
+          </mat-error>
+        }
+
+      </mat-form-field>
+
+      <div class="reference-field">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Coordinates</mat-label>
+
+          <mat-select formControlName="coordinatesId">
+
+            @if (coordinates.length === 0) {
+
+              <mat-option disabled>
+                No coordinates available
+              </mat-option>
+
+            } @else {
+
+              @for (
+                coordinate of coordinates;
+                track coordinate.id
+              ) {
+
+                <mat-option [value]="coordinate.id">
+
+                  #{{ coordinate.id }}
+                  —
+                  ({{ coordinate.x }}, {{ coordinate.y }})
+
+                </mat-option>
+
+              }
+
+            }
+
+          </mat-select>
+
+          @if (
+            form.get('coordinatesId')?.touched &&
+            form.get('coordinatesId')?.hasError('required')
+          ) {
+            <mat-error>
+              Coordinates are required
+            </mat-error>
+          }
+
+        </mat-form-field>
+
+
+        <button
+          mat-stroked-button
+          type="button"
+          class="create-reference-button"
+          (click)="openCreateCoordinatesDialog()"
+        >
+          + New coordinates
+        </button>
+
+      </div>
+
+      <div class="reference-field">
+
+        <mat-form-field appearance="outline">
+
+          <mat-label>Location</mat-label>
+
+          <mat-select formControlName="locationId">
+
+            @if (locations.length === 0) {
+
+              <mat-option disabled>
+                No locations available
+              </mat-option>
+
+            } @else {
+
+              @for (
+                location of locations;
+                track location.id
+              ) {
+
+                <mat-option [value]="location.id">
+
+                  #{{ location.id }}
+                  —
+                  (
+                    {{ location.x }},
+                    {{ location.y }},
+                    {{ location.z }}
+                  )
+
+                </mat-option>
+
+              }
+
+            }
+
+          </mat-select>
+
+          @if (
+            form.get('locationId')?.touched &&
+            form.get('locationId')?.hasError('required')
+          ) {
+            <mat-error>
+              Location is required
+            </mat-error>
+          }
+
+        </mat-form-field>
+
+
+        <button
+          mat-stroked-button
+          type="button"
+          class="create-reference-button"
+          (click)="openCreateLocationDialog()"
+        >
+          + New location
+        </button>
+
+      </div>
+
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Hair color</mat-label>
+
+        <mat-select formControlName="hairColor">
+
+          @for (color of colors; track color) {
+
+            <mat-option [value]="color">
+              {{ color }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+        @if (
+          form.get('hairColor')?.touched &&
+          form.get('hairColor')?.hasError('required')
+        ) {
+          <mat-error>
+            Hair color is required
+          </mat-error>
+        }
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Eye color</mat-label>
+
+        <mat-select formControlName="eyeColor">
+
+          <mat-option [value]="null">
+            None
+          </mat-option>
+
+          @for (color of colors; track color) {
+
+            <mat-option [value]="color">
+              {{ color }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+        <mat-hint>
+          Optional
+        </mat-hint>
+
+      </mat-form-field>
+
+
+      <!-- NATIONALITY -->
+
+      <mat-form-field
+        appearance="outline"
+        class="full-width"
+      >
+
+        <mat-label>Nationality</mat-label>
+
+        <mat-select formControlName="nationality">
+
+          <mat-option [value]="null">
+            None
+          </mat-option>
+
+          @for (country of countries; track country) {
+
+            <mat-option [value]="country">
+              {{ country }}
+            </mat-option>
+
+          }
+
+        </mat-select>
+
+        <mat-hint>
+          Optional
+        </mat-hint>
+
+      </mat-form-field>
+
+    </form>
+
+  }
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="cancel()"
+  >
+    Cancel
+  </button>
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="save()"
+    [disabled]="
+      loadingReferences ||
+      referencesLoadFailed ||
+      coordinates.length === 0 ||
+      locations.length === 0
+    "
+  >
+    {{ isEdit ? 'Save changes' : 'Create person' }}
+  </button>
+
+</mat-dialog-actions>

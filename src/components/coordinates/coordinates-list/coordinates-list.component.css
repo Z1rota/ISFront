@@ -1,0 +1,180 @@
+:host {
+  display: block;
+}
+
+
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+}
+
+.page-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 600;
+
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin: 6px 0 0;
+
+  font-size: 14px;
+
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.create-button {
+  min-width: 160px;
+}
+
+
+.table-card {
+  overflow: hidden;
+
+  background: var(--mat-sys-surface);
+
+  border: 1px solid
+    var(--mat-sys-outline-variant);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04),
+    0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.coordinates-table {
+  width: 100%;
+
+  border-collapse: collapse;
+  border-spacing: 0;
+
+  font-size: 14px;
+}
+
+.coordinates-table thead {
+  background:
+    var(--mat-sys-surface-container);
+}
+
+.coordinates-table th {
+  padding: 14px 18px;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color:
+    var(--mat-sys-on-surface-variant);
+
+  border-bottom: 1px solid
+    var(--mat-sys-outline-variant);
+}
+
+.coordinates-table td {
+  padding: 15px 18px;
+
+  border-bottom: 1px solid
+    var(--mat-sys-outline-variant);
+
+  transition:
+    background-color 120ms ease;
+}
+
+.coordinates-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.coordinates-table tbody tr:hover td {
+  background:
+    var(--mat-sys-surface-container-low);
+}
+
+
+.id-cell {
+  opacity: 0.65;
+
+  font-variant-numeric: tabular-nums;
+}
+
+.actions-header {
+  text-align: right !important;
+}
+
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.delete-button {
+  color: var(--mat-sys-error);
+}
+
+.state-message {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  min-height: 240px;
+
+  padding: 40px;
+
+  text-align: center;
+}
+
+.empty-title {
+  margin-bottom: 6px;
+
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.empty-description {
+  max-width: 420px;
+
+  font-size: 14px;
+
+  color:
+    var(--mat-sys-on-surface-variant);
+}
+
+@media (max-width: 700px) {
+
+  .page {
+    padding: 20px;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .create-button {
+    width: 100%;
+  }
+
+}

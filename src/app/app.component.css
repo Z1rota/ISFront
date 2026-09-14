@@ -1,0 +1,59 @@
+:host {
+  display: block;
+  min-height: 100vh;
+
+  background:
+    var(--mat-sys-surface-container-low);
+}
+
+.app-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+
+  min-height: 64px;
+  padding: 0 32px;
+
+  background:
+    var(--mat-sys-surface);
+
+  border-bottom: 1px solid
+    var(--mat-sys-outline-variant);
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.brand {
+  margin-right: 40px;
+
+  font-size: 20px;
+  font-weight: 650;
+
+  color:
+    var(--mat-sys-primary);
+}
+
+.navigation {
+  display: flex;
+  gap: 4px;
+}
+
+.navigation a {
+  border-radius: 10px;
+}
+
+.active-link {
+  color:
+    var(--mat-sys-on-secondary-container) !important;
+
+  background:
+    var(--mat-sys-secondary-container);
+}
+
+main {
+  min-height: calc(100vh - 64px);
+}

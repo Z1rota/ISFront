@@ -1,0 +1,160 @@
+<h2 mat-dialog-title>
+  {{ person.name }}
+</h2>
+
+<mat-dialog-content>
+
+  <div class="details">
+
+    <section class="section">
+
+      <h3>Person information</h3>
+
+      <div class="details-grid">
+
+        <div class="field">
+          <span>ID</span>
+          <strong>{{ person.id }}</strong>
+        </div>
+
+        <div class="field">
+          <span>Name</span>
+          <strong>{{ person.name }}</strong>
+        </div>
+
+        <div class="field">
+          <span>Height</span>
+          <strong>{{ person.height }}</strong>
+        </div>
+
+        <div class="field">
+          <span>Creation date</span>
+
+          <strong>
+            {{
+              person.creationDate
+                | date:'dd.MM.yyyy HH:mm:ss'
+            }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Eye color</span>
+          <strong>
+            {{ person.eyeColor ?? 'None' }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Hair color</span>
+          <strong>
+            {{ person.hairColor }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Nationality</span>
+          <strong>
+            {{ person.nationality ?? 'None' }}
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <h3>Coordinates</h3>
+
+      <div class="related-object">
+
+        <div class="field">
+          <span>ID</span>
+          <strong>
+            {{ person.coordinates.id }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>X</span>
+          <strong>
+            {{ person.coordinates.x }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Y</span>
+          <strong>
+            {{ person.coordinates.y }}
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section class="section">
+
+      <h3>Location</h3>
+
+      <div class="related-object">
+
+        <div class="field">
+          <span>ID</span>
+          <strong>
+            {{ person.location.id }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>X</span>
+          <strong>
+            {{ person.location.x }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Y</span>
+          <strong>
+            {{ person.location.y }}
+          </strong>
+        </div>
+
+        <div class="field">
+          <span>Z</span>
+          <strong>
+            {{ person.location.z }}
+          </strong>
+        </div>
+
+      </div>
+
+    </section>
+
+  </div>
+
+</mat-dialog-content>
+
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    type="button"
+    (click)="close()"
+  >
+    Close
+  </button>
+
+  <button
+    mat-flat-button
+    type="button"
+    (click)="edit()"
+  >
+    Edit person
+  </button>
+
+</mat-dialog-actions>
