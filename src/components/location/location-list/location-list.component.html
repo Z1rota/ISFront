@@ -3,11 +3,7 @@
   <div class="page-header">
 
     <div>
-      <h1>Locations</h1>
-
-      <p class="subtitle">
-        Manage locations used by persons
-      </p>
+      <h1>Местоположения</h1>
     </div>
 
     <button
@@ -15,7 +11,7 @@
       class="create-button"
       (click)="openCreateDialog()"
     >
-      Create location
+      Добавить местоположение
     </button>
 
   </div>
@@ -26,7 +22,7 @@
     @if (loading) {
 
       <div class="state-message">
-        Loading locations...
+        Загрузка местоположений...
       </div>
 
     } @else if (locations.length === 0) {
@@ -34,11 +30,11 @@
       <div class="state-message">
 
         <div class="empty-title">
-          No locations found
+          Местоположения не найдены
         </div>
 
         <div class="empty-description">
-          Create a location to use it when creating a person.
+          Добавьте местоположение, чтобы использовать его при добавлении человека.
         </div>
 
       </div>
@@ -52,13 +48,13 @@
           <thead>
 
             <tr>
-              <th>ID</th>
+              <th>№</th>
               <th>X</th>
               <th>Y</th>
               <th>Z</th>
 
               <th class="actions-header">
-                Actions
+                Действия
               </th>
             </tr>
 
@@ -99,7 +95,7 @@
                       class="delete-button"
                       (click)="deleteLocation(location)"
                     >
-                      Delete
+                      Удалить
                     </button>
 
                   </div>

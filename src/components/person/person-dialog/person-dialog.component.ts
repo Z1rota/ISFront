@@ -1,3 +1,4 @@
+import { colorLabel, countryLabel } from '../../../app/ui-labels';
 import { Component, Inject, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -50,6 +51,9 @@ export interface PersonDialogResult {
   styleUrl: './person-dialog.component.css'
 })
 export class PersonDialogComponent implements OnInit {
+
+  readonly colorLabel = colorLabel;
+  readonly countryLabel = countryLabel;
 
   form: FormGroup;
 
@@ -186,7 +190,7 @@ export class PersonDialogComponent implements OnInit {
 
           error: () => {
             this.showError(
-              'Failed to create coordinates'
+              'Не удалось добавить координаты'
             );
           }
         });
@@ -223,7 +227,7 @@ export class PersonDialogComponent implements OnInit {
 
           error: () => {
             this.showError(
-              'Failed to create location'
+              'Не удалось добавить местоположение'
             );
           }
         });
@@ -262,7 +266,7 @@ export class PersonDialogComponent implements OnInit {
   private showError(message: string): void {
     this.snackBar.open(
       message,
-      'Close',
+      'Закрыть',
       {
         duration: 4000,
         horizontalPosition: 'right',

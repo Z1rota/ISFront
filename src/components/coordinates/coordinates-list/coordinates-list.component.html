@@ -3,11 +3,7 @@
   <div class="page-header">
 
     <div>
-      <h1>Coordinates</h1>
-
-      <p class="subtitle">
-        Manage coordinates used by persons
-      </p>
+      <h1>Координаты</h1>
     </div>
 
     <button
@@ -15,7 +11,7 @@
       class="create-button"
       (click)="openCreateDialog()"
     >
-      Create coordinates
+      Добавить координаты
     </button>
 
   </div>
@@ -26,7 +22,7 @@
     @if (loading) {
 
       <div class="state-message">
-        Loading coordinates...
+        Загрузка координат...
       </div>
 
     } @else if (coordinates.length === 0) {
@@ -34,11 +30,11 @@
       <div class="state-message">
 
         <div class="empty-title">
-          No coordinates found
+          Координаты не найдены
         </div>
 
         <div class="empty-description">
-          Create coordinates to use them when creating a person.
+          Добавьте координаты, чтобы использовать их при добавлении человека.
         </div>
 
       </div>
@@ -52,12 +48,12 @@
           <thead>
 
             <tr>
-              <th>ID</th>
+              <th>№</th>
               <th>X</th>
               <th>Y</th>
 
               <th class="actions-header">
-                Actions
+                Действия
               </th>
             </tr>
 
@@ -94,7 +90,7 @@
                       class="delete-button"
                       (click)="deleteCoordinates(coordinate)"
                     >
-                      Delete
+                      Удалить
                     </button>
 
                   </div>

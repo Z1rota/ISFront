@@ -3,11 +3,7 @@
   <div class="page-header">
 
     <div>
-      <h1>Special operations</h1>
-
-      <p class="subtitle">
-        Execute special operations definited in my Lab Variant
-      </p>
+      <h1>Специальные операции</h1>
     </div>
 
   </div>
@@ -21,11 +17,11 @@
       <mat-card-header>
 
         <mat-card-title>
-          Delete by nationality
+          Удаление по гражданству
         </mat-card-title>
 
         <mat-card-subtitle>
-          Delete one arbitrary person with the selected nationality
+          Удалить одного произвольного человека с выбранным гражданством
         </mat-card-subtitle>
 
       </mat-card-header>
@@ -40,7 +36,7 @@
             subscriptSizing="dynamic"
           >
 
-            <mat-label>Nationality</mat-label>
+            <mat-label>Гражданство</mat-label>
 
             <mat-select
               [(ngModel)]="selectedNationality"
@@ -52,7 +48,7 @@
               ) {
 
                 <mat-option [value]="country">
-                  {{ country }}
+                  {{ countryLabel(country) }}
                 </mat-option>
 
               }
@@ -68,7 +64,7 @@
             [disabled]="!selectedNationality"
             (click)="deleteByNationality()"
           >
-            Delete person
+            Удалить человека
           </button>
 
         </div>
@@ -85,11 +81,11 @@
       <mat-card-header>
 
         <mat-card-title>
-          Minimum height
+          Минимальный рост
         </mat-card-title>
 
         <mat-card-subtitle>
-          Return one person with the minimum height
+          Найти человека с минимальным ростом
         </mat-card-subtitle>
 
       </mat-card-header>
@@ -103,7 +99,7 @@
             mat-flat-button
             (click)="getMinHeightPerson()"
           >
-            Find person
+            Найти человека
           </button>
 
 
@@ -116,30 +112,30 @@
               </div>
 
               <div class="result-row">
-                <span>ID</span>
+                <span>№</span>
                 <strong>
                   {{ minHeightPerson.id }}
                 </strong>
               </div>
 
               <div class="result-row">
-                <span>Height</span>
+                <span>Рост</span>
                 <strong>
                   {{ minHeightPerson.height }}
                 </strong>
               </div>
 
               <div class="result-row">
-                <span>Nationality</span>
+                <span>Гражданство</span>
                 <strong>
-                  {{ minHeightPerson.nationality ?? 'None' }}
+                  {{ countryLabel(minHeightPerson.nationality) }}
                 </strong>
               </div>
 
               <div class="result-row">
-                <span>Hair color</span>
+                <span>Цвет волос</span>
                 <strong>
-                  {{ minHeightPerson.hairColor }}
+                  {{ colorLabel(minHeightPerson.hairColor) }}
                 </strong>
               </div>
 
@@ -161,11 +157,11 @@
       <mat-card-header>
 
         <mat-card-title>
-          Group by nationality
+          Группировка по гражданству
         </mat-card-title>
 
         <mat-card-subtitle>
-          Count persons in every nationality group
+          Подсчитать людей в каждой группе гражданства
         </mat-card-subtitle>
 
       </mat-card-header>
@@ -179,7 +175,7 @@
             mat-flat-button
             (click)="groupByNationality()"
           >
-            Calculate
+            Рассчитать
           </button>
 
 
@@ -195,7 +191,7 @@
                 <div class="group-row">
 
                   <span class="group-name">
-                    {{ group.nationality ?? 'No nationality' }}
+                    {{ countryLabel(group.nationality) }}
                   </span>
 
                   <span class="count-chip">
@@ -224,11 +220,11 @@
       <mat-card-header>
 
         <mat-card-title>
-          Hair color percentage
+          Доля людей по цвету волос
         </mat-card-title>
 
         <mat-card-subtitle>
-          Percentage of persons with the selected hair color
+          Процент людей с выбранным цветом волос
         </mat-card-subtitle>
 
       </mat-card-header>
@@ -243,7 +239,7 @@
             subscriptSizing="dynamic"
           >
 
-            <mat-label>Hair color</mat-label>
+            <mat-label>Цвет волос</mat-label>
 
             <mat-select
               [(ngModel)]="selectedHairColor"
@@ -255,7 +251,7 @@
               ) {
 
                 <mat-option [value]="color">
-                  {{ color }}
+                  {{ colorLabel(color) }}
                 </mat-option>
 
               }
@@ -270,7 +266,7 @@
             [disabled]="!selectedHairColor"
             (click)="getHairColorPercentage()"
           >
-            Calculate
+            Рассчитать
           </button>
 
 
@@ -284,7 +280,7 @@
               }}%
 
               <span>
-                of the population
+                от общего числа людей
               </span>
 
             </div>
@@ -305,11 +301,11 @@
       <mat-card-header>
 
         <mat-card-title>
-          Eye color count
+          Количество людей по цвету глаз
         </mat-card-title>
 
         <mat-card-subtitle>
-          Count persons with the selected eye color
+          Подсчитать людей с выбранным цветом глаз
         </mat-card-subtitle>
 
       </mat-card-header>
@@ -324,7 +320,7 @@
             subscriptSizing="dynamic"
           >
 
-            <mat-label>Eye color</mat-label>
+            <mat-label>Цвет глаз</mat-label>
 
             <mat-select
               [(ngModel)]="selectedEyeColor"
@@ -336,7 +332,7 @@
               ) {
 
                 <mat-option [value]="color">
-                  {{ color }}
+                  {{ colorLabel(color) }}
                 </mat-option>
 
               }
@@ -351,7 +347,7 @@
             [disabled]="!selectedEyeColor"
             (click)="getEyeColorCount()"
           >
-            Count
+            Подсчитать
           </button>
 
 
@@ -362,7 +358,7 @@
               {{ eyeColorCount }}
 
               <span>
-                persons
+                чел.
               </span>
 
             </div>

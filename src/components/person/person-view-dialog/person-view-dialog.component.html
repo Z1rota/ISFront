@@ -8,27 +8,27 @@
 
     <section class="section">
 
-      <h3>Person information</h3>
+      <h3>Сведения о человеке</h3>
 
       <div class="details-grid">
 
         <div class="field">
-          <span>ID</span>
+          <span>№</span>
           <strong>{{ person.id }}</strong>
         </div>
 
         <div class="field">
-          <span>Name</span>
+          <span>Имя</span>
           <strong>{{ person.name }}</strong>
         </div>
 
         <div class="field">
-          <span>Height</span>
+          <span>Рост</span>
           <strong>{{ person.height }}</strong>
         </div>
 
         <div class="field">
-          <span>Creation date</span>
+          <span>Дата создания</span>
 
           <strong>
             {{
@@ -39,23 +39,23 @@
         </div>
 
         <div class="field">
-          <span>Eye color</span>
+          <span>Цвет глаз</span>
           <strong>
-            {{ person.eyeColor ?? 'None' }}
+            {{ colorLabel(person.eyeColor) }}
           </strong>
         </div>
 
         <div class="field">
-          <span>Hair color</span>
+          <span>Цвет волос</span>
           <strong>
-            {{ person.hairColor }}
+            {{ colorLabel(person.hairColor) }}
           </strong>
         </div>
 
         <div class="field">
-          <span>Nationality</span>
+          <span>Гражданство</span>
           <strong>
-            {{ person.nationality ?? 'None' }}
+            {{ countryLabel(person.nationality) }}
           </strong>
         </div>
 
@@ -66,12 +66,12 @@
 
     <section class="section">
 
-      <h3>Coordinates</h3>
+      <h3>Координаты</h3>
 
       <div class="related-object">
 
         <div class="field">
-          <span>ID</span>
+          <span>№</span>
           <strong>
             {{ person.coordinates.id }}
           </strong>
@@ -98,12 +98,12 @@
 
     <section class="section">
 
-      <h3>Location</h3>
+      <h3>Местоположение</h3>
 
       <div class="related-object">
 
         <div class="field">
-          <span>ID</span>
+          <span>№</span>
           <strong>
             {{ person.location.id }}
           </strong>
@@ -146,7 +146,7 @@
     type="button"
     (click)="close()"
   >
-    Close
+    Закрыть
   </button>
 
   <button
@@ -154,7 +154,7 @@
     type="button"
     (click)="edit()"
   >
-    Edit person
+    Редактировать человека
   </button>
 
 </mat-dialog-actions>

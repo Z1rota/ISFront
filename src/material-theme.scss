@@ -10,19 +10,43 @@ html {
   height: 100%;
   @include mat.theme((
     color: (
-      primary: mat.$magenta-palette,
+      theme-type: dark,
+      primary: mat.$violet-palette,
       tertiary: mat.$violet-palette,
     ),
     typography: Roboto,
     density: 0,
   ));
+
+  @include mat.theme-overrides((
+    primary: #a16acb,
+    on-primary: #ffffff,
+    primary-container: #4b1d6b,
+    on-primary-container: #f1e4fa,
+    secondary-container: #2d173e,
+    on-secondary-container: #d6b5ed,
+    surface: #080808,
+    surface-dim: #080808,
+    surface-bright: #292929,
+    surface-container-lowest: #000000,
+    surface-container-low: #000000,
+    surface-container: #121212,
+    surface-container-high: #1b1b1b,
+    surface-container-highest: #242424,
+    on-surface: #eee9f0,
+    on-surface-variant: #c7bfcb,
+    outline: #85788c,
+    outline-variant: #352c3b,
+  ));
+
+  @include mat.button-overrides((
+    filled-container-color: #58247a,
+    filled-label-text-color: #ffffff,
+  ));
 }
 
 body {
-  // Default the application to a light color theme. This can be changed to
-  // `dark` to enable the dark color theme, or to `light dark` to defer to the
-  // user's system settings.
-  color-scheme: light;
+  color-scheme: dark;
 
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these

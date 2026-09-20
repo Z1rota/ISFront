@@ -1,3 +1,5 @@
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { colorLabel, countryLabel } from '../../../app/ui-labels';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
@@ -12,7 +14,7 @@ import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
-import { Subscription } from 'rxjs';
+import { merge, Subscription } from 'rxjs';
 
 import { Coordinates, Location, Person } from '../../../model/person';
 
@@ -34,6 +36,7 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
     FormsModule,
 
     MatButtonModule,
+    MatTooltipModule,
     MatFormFieldModule,
     MatInputModule,
     MatPaginatorModule,
@@ -43,6 +46,9 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
   styleUrl: './person-list.component.css'
 })
 export class PersonListComponent implements OnInit, OnDestroy {
+
+  readonly colorLabel = colorLabel;
+  readonly countryLabel = countryLabel;
 
   persons: Person[] = [];
 
@@ -72,8 +78,12 @@ export class PersonListComponent implements OnInit, OnDestroy {
     this.loadPersons();
 
     this.websocketSubscription =
-      this.personWebsocketService
-        .personChanged$
+      merge(
+        this.personWebsocketService.personChanged$,
+        this.personWebsocketService.coordinatesChanged$,
+        this.personWebsocketService.locationChanged$,
+        this.personWebsocketService.connected$
+      )
         .subscribe(() => {
           this.loadPersons();
         });
@@ -107,7 +117,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
         this.loading = false;
 
         this.showError(
-          'Failed to load persons'
+          'Не удалось загрузить людей'
         );
       }
     });
@@ -180,7 +190,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
         .subscribe({
           error: () => {
             this.showError(
-              'Failed to create person'
+              'Не удалось добавить человека'
             );
           }
         });
@@ -227,7 +237,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
         .subscribe({
           error: () => {
             this.showError(
-              'Failed to update person'
+              'Не удалось обновить сведения о человеке'
             );
           }
         });
@@ -265,11 +275,11 @@ export class PersonListComponent implements OnInit, OnDestroy {
         maxWidth: '95vw',
 
         data: {
-          title: 'Delete person',
+          title: 'Удалить человека',
           message:
-            `Are you sure you want to delete "${person.name}"?`,
-          confirmText: 'Delete',
-          cancelText: 'Cancel'
+            `Удалить человека «${person.name}»?`,
+          confirmText: 'Удалить',
+          cancelText: 'Отмена'
         }
       }
     );
@@ -293,7 +303,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
 
           error: () => {
             this.showError(
-              'Failed to delete person'
+              'Не удалось удалить человека'
             );
           }
         });
@@ -303,7 +313,7 @@ export class PersonListComponent implements OnInit, OnDestroy {
   private showError(message: string): void {
     this.snackBar.open(
       message,
-      'Close',
+      'Закрыть',
       {
         duration: 4000,
         horizontalPosition: 'right',

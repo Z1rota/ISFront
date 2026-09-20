@@ -1,3 +1,4 @@
+import { colorLabel, countryLabel } from '../../../app/ui-labels';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -34,6 +35,9 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
 })
 export class SpecialOperationsComponent {
 
+  readonly colorLabel = colorLabel;
+  readonly countryLabel = countryLabel;
+
   countries = Object.values(Country);
   colors = Object.values(Color);
 
@@ -68,11 +72,11 @@ export class SpecialOperationsComponent {
         maxWidth: '95vw',
 
         data: {
-          title: 'Delete person',
+          title: 'Удалить человека',
           message:
-            `Delete one person with nationality ${nationality}?`,
-          confirmText: 'Delete',
-          cancelText: 'Cancel'
+            `Удалить одного человека с гражданством «${this.countryLabel(nationality)}»?`,
+          confirmText: 'Удалить',
+          cancelText: 'Отмена'
         }
       }
     );
@@ -92,14 +96,14 @@ export class SpecialOperationsComponent {
           error: error => {
             if (error.status === 404) {
               this.showError(
-                `No person with nationality ${nationality} found`
+                `Человек с гражданством «${this.countryLabel(nationality)}» не найден`
               );
 
               return;
             }
 
             this.showError(
-              'Failed to delete person'
+              'Не удалось удалить человека'
             );
           }
         });
@@ -119,14 +123,14 @@ export class SpecialOperationsComponent {
 
           if (error.status === 404) {
             this.showError(
-              'No persons found'
+              'Люди не найдены'
             );
 
             return;
           }
 
           this.showError(
-            'Failed to get person with minimum height'
+            'Не удалось найти человека с минимальным ростом'
           );
         }
       });
@@ -144,7 +148,7 @@ export class SpecialOperationsComponent {
           this.nationalityGroups = [];
 
           this.showError(
-            'Failed to group persons by nationality'
+            'Не удалось сгруппировать людей по гражданству'
           );
         }
       });
@@ -168,7 +172,7 @@ export class SpecialOperationsComponent {
           this.hairColorPercentage = null;
 
           this.showError(
-            'Failed to calculate hair color percentage'
+            'Не удалось рассчитать долю людей по цвету волос'
           );
         }
       });
@@ -192,7 +196,7 @@ export class SpecialOperationsComponent {
           this.eyeColorCount = null;
 
           this.showError(
-            'Failed to count persons by eye color'
+            'Не удалось подсчитать людей по цвету глаз'
           );
         }
       });
@@ -225,7 +229,7 @@ export class SpecialOperationsComponent {
   private showError(message: string): void {
     this.snackBar.open(
       message,
-      'Close',
+      'Закрыть',
       {
         duration: 4000,
         horizontalPosition: 'right',

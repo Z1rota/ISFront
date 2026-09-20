@@ -2,14 +2,14 @@
 
   <div>
     <h2 mat-dialog-title>
-      {{ isEdit ? 'Edit person' : 'Create person' }}
+      {{ isEdit ? 'Редактировать человека' : 'Добавить человека' }}
     </h2>
 
     <p class="dialog-subtitle">
       {{
         isEdit
-          ? 'Change person information'
-          : 'Fill in the information about a new person'
+          ? 'Измените сведения о человеке'
+          : 'Заполните сведения о новом человеке'
       }}
     </p>
   </div>
@@ -26,7 +26,7 @@
       <mat-spinner diameter="36"></mat-spinner>
 
       <span>
-        Loading coordinates and locations...
+        Загрузка координат и местоположений...
       </span>
 
     </div>
@@ -36,11 +36,11 @@
     <div class="load-error">
 
       <div class="load-error-title">
-        Failed to load related objects
+        Не удалось загрузить связанные объекты
       </div>
 
       <div class="load-error-description">
-        Coordinates or locations could not be loaded.
+        Не удалось загрузить координаты или местоположения.
       </div>
 
       <button
@@ -48,7 +48,7 @@
         type="button"
         (click)="loadReferences()"
       >
-        Try again
+        Повторить
       </button>
 
     </div>
@@ -64,12 +64,12 @@
         class="full-width"
       >
 
-        <mat-label>Name</mat-label>
+        <mat-label>Имя</mat-label>
 
         <input
           matInput
           formControlName="name"
-          placeholder="Enter name"
+          placeholder="Введите имя"
         >
 
         @if (
@@ -77,14 +77,14 @@
           form.get('name')?.hasError('required')
         ) {
           <mat-error>
-            Name is required
+            Укажите имя
           </mat-error>
         } @else if (
           form.get('name')?.touched &&
           form.get('name')?.hasError('blank')
         ) {
           <mat-error>
-            Name cannot contain only spaces
+            Имя не может состоять только из пробелов
           </mat-error>
         }
 
@@ -92,7 +92,7 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Height</mat-label>
+        <mat-label>Рост</mat-label>
 
         <input
           matInput
@@ -106,7 +106,7 @@
           form.get('height')?.hasError('required')
         ) {
           <mat-error>
-            Height is required
+            Укажите рост
           </mat-error>
         }
 
@@ -115,7 +115,7 @@
           form.get('height')?.hasError('positive')
         ) {
           <mat-error>
-            Height must be greater than 0
+            Рост должен быть больше 0
           </mat-error>
         }
 
@@ -125,14 +125,14 @@
 
         <mat-form-field appearance="outline">
 
-          <mat-label>Coordinates</mat-label>
+          <mat-label>Координаты</mat-label>
 
           <mat-select formControlName="coordinatesId">
 
             @if (coordinates.length === 0) {
 
               <mat-option disabled>
-                No coordinates available
+                Нет доступных координат
               </mat-option>
 
             } @else {
@@ -161,7 +161,7 @@
             form.get('coordinatesId')?.hasError('required')
           ) {
             <mat-error>
-              Coordinates are required
+              Выберите координаты
             </mat-error>
           }
 
@@ -174,7 +174,7 @@
           class="create-reference-button"
           (click)="openCreateCoordinatesDialog()"
         >
-          + New coordinates
+          + Новые координаты
         </button>
 
       </div>
@@ -183,14 +183,14 @@
 
         <mat-form-field appearance="outline">
 
-          <mat-label>Location</mat-label>
+          <mat-label>Местоположение</mat-label>
 
           <mat-select formControlName="locationId">
 
             @if (locations.length === 0) {
 
               <mat-option disabled>
-                No locations available
+                Нет доступных местоположений
               </mat-option>
 
             } @else {
@@ -223,7 +223,7 @@
             form.get('locationId')?.hasError('required')
           ) {
             <mat-error>
-              Location is required
+              Выберите местоположение
             </mat-error>
           }
 
@@ -236,7 +236,7 @@
           class="create-reference-button"
           (click)="openCreateLocationDialog()"
         >
-          + New location
+          + Новое местоположение
         </button>
 
       </div>
@@ -244,14 +244,14 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Hair color</mat-label>
+        <mat-label>Цвет волос</mat-label>
 
         <mat-select formControlName="hairColor">
 
           @for (color of colors; track color) {
 
             <mat-option [value]="color">
-              {{ color }}
+              {{ colorLabel(color) }}
             </mat-option>
 
           }
@@ -263,7 +263,7 @@
           form.get('hairColor')?.hasError('required')
         ) {
           <mat-error>
-            Hair color is required
+            Выберите цвет волос
           </mat-error>
         }
 
@@ -271,18 +271,18 @@
 
       <mat-form-field appearance="outline">
 
-        <mat-label>Eye color</mat-label>
+        <mat-label>Цвет глаз</mat-label>
 
         <mat-select formControlName="eyeColor">
 
           <mat-option [value]="null">
-            None
+            Не указано
           </mat-option>
 
           @for (color of colors; track color) {
 
             <mat-option [value]="color">
-              {{ color }}
+              {{ colorLabel(color) }}
             </mat-option>
 
           }
@@ -290,31 +290,28 @@
         </mat-select>
 
         <mat-hint>
-          Optional
+          Необязательно
         </mat-hint>
 
       </mat-form-field>
-
-
-      <!-- NATIONALITY -->
 
       <mat-form-field
         appearance="outline"
         class="full-width"
       >
 
-        <mat-label>Nationality</mat-label>
+        <mat-label>Гражданство</mat-label>
 
         <mat-select formControlName="nationality">
 
           <mat-option [value]="null">
-            None
+            Не указано
           </mat-option>
 
           @for (country of countries; track country) {
 
             <mat-option [value]="country">
-              {{ country }}
+              {{ countryLabel(country) }}
             </mat-option>
 
           }
@@ -322,7 +319,7 @@
         </mat-select>
 
         <mat-hint>
-          Optional
+          Необязательно
         </mat-hint>
 
       </mat-form-field>
@@ -341,7 +338,7 @@
     type="button"
     (click)="cancel()"
   >
-    Cancel
+    Отмена
   </button>
 
   <button
@@ -355,7 +352,7 @@
       locations.length === 0
     "
   >
-    {{ isEdit ? 'Save changes' : 'Create person' }}
+    {{ isEdit ? 'Сохранить изменения' : 'Добавить человека' }}
   </button>
 
 </mat-dialog-actions>

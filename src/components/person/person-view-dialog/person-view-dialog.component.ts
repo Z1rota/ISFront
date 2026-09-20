@@ -1,3 +1,4 @@
+import { colorLabel, countryLabel } from '../../../app/ui-labels';
 import { Component, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -21,6 +22,9 @@ import { Person } from '../../../model/person';
   styleUrl: './person-view-dialog.component.css'
 })
 export class PersonViewDialogComponent {
+
+  readonly colorLabel = colorLabel;
+  readonly countryLabel = countryLabel;
 
   constructor(
     @Inject(MAT_DIALOG_DATA)

@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>
-  Create coordinates
+  Добавить координаты
 </h2>
 
 <mat-dialog-content>
@@ -24,7 +24,7 @@
         form.get('x')?.hasError('required')
       ) {
         <mat-error>
-          X is required
+          Укажите X
         </mat-error>
       }
 
@@ -46,7 +46,7 @@
         form.get('y')?.hasError('required')
       ) {
         <mat-error>
-          Y is required
+          Укажите Y
         </mat-error>
       }
 
@@ -64,7 +64,7 @@
     type="button"
     (click)="cancel()"
   >
-    Cancel
+    Отмена
   </button>
 
   <button
@@ -72,7 +72,7 @@
     type="button"
     (click)="save()"
   >
-    Create
+    Добавить
   </button>
 
 </mat-dialog-actions>

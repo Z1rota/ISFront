@@ -29,13 +29,6 @@
   letter-spacing: -0.5px;
 }
 
-.subtitle {
-  margin: 6px 0 0;
-
-  font-size: 14px;
-
-  color: var(--mat-sys-on-surface-variant);
-}
 
 .create-button {
   min-width: 160px;

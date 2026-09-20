@@ -3,11 +3,7 @@
   <div class="page-header">
 
     <div>
-      <h1>Persons</h1>
-
-      <p class="subtitle">
-        Manage persons and their related objects
-      </p>
+      <h1>Люди</h1>
     </div>
 
     <button
@@ -15,7 +11,7 @@
       class="create-button"
       (click)="openCreateDialog()"
     >
-      Create person
+      Добавить человека
     </button>
 
   </div>
@@ -29,13 +25,13 @@
       subscriptSizing="dynamic"
     >
 
-      <mat-label>Filter by name</mat-label>
+      <mat-label>Фильтр по имени</mat-label>
 
       <input
         matInput
         [(ngModel)]="nameFilter"
         (keyup.enter)="applyFilter()"
-        placeholder="Exact name"
+        placeholder="Точное имя"
       >
 
     </mat-form-field>
@@ -45,7 +41,7 @@
       mat-flat-button
       (click)="applyFilter()"
     >
-      Filter
+      Найти
     </button>
 
 
@@ -54,7 +50,7 @@
       (click)="clearFilter()"
       [disabled]="!nameFilter"
     >
-      Clear
+      Сбросить
     </button>
 
   </div>
@@ -65,7 +61,7 @@
     @if (loading) {
 
       <div class="state-message">
-        Loading persons...
+        Загрузка людей...
       </div>
 
     } @else if (persons.length === 0) {
@@ -73,11 +69,11 @@
       <div class="state-message">
 
         <div class="empty-title">
-          No persons found
+          Люди не найдены
         </div>
 
         <div class="empty-description">
-          Try changing the filter or create a new person.
+          Измените фильтр или добавьте человека.
         </div>
 
       </div>
@@ -91,7 +87,7 @@
           <thead>
             <tr>
 
-              <th>ID</th>
+              <th>№</th>
 
               <th
                 class="sortable"
@@ -99,7 +95,7 @@
               >
                 <div class="sortable-header">
 
-                  <span>Name</span>
+                  <span>Имя</span>
 
                   <span class="sort-icon">
                     {{ direction === 'asc' ? '↑' : '↓' }}
@@ -108,24 +104,24 @@
                 </div>
               </th>
 
-              <th>Coordinates X</th>
-              <th>Coordinates Y</th>
+              <th>Координата X</th>
+              <th>Координата Y</th>
 
-              <th>Creation date</th>
+              <th>Дата создания</th>
 
-              <th>Eye color</th>
-              <th>Hair color</th>
+              <th>Цвет глаз</th>
+              <th>Цвет волос</th>
 
-              <th>Location X</th>
-              <th>Location Y</th>
-              <th>Location Z</th>
+              <th>Местоположение X</th>
+              <th>Местоположение Y</th>
+              <th>Местоположение Z</th>
 
-              <th>Height</th>
+              <th>Рост</th>
 
-              <th>Nationality</th>
+              <th>Гражданство</th>
 
               <th class="actions-header">
-                Actions
+                Действия
               </th>
 
             </tr>
@@ -164,7 +160,7 @@
                 <td>
                   @if (person.eyeColor) {
                     <span class="value-chip">
-                      {{ person.eyeColor }}
+                      {{ colorLabel(person.eyeColor) }}
                     </span>
                   } @else {
                     <span class="null-value">
@@ -175,7 +171,7 @@
 
                 <td>
                   <span class="value-chip">
-                    {{ person.hairColor }}
+                    {{ colorLabel(person.hairColor) }}
                   </span>
                 </td>
 
@@ -198,7 +194,7 @@
                 <td>
                   @if (person.nationality) {
                     <span class="value-chip">
-                      {{ person.nationality }}
+                      {{ countryLabel(person.nationality) }}
                     </span>
                   } @else {
                     <span class="null-value">
@@ -207,33 +203,32 @@
                   }
                 </td>
 
-                <td>
+                <td class="actions-cell">
 
                   <div class="actions">
-
-                        <button
-                            mat-button
-                            (click)="openViewDialog(person)"
-                        >
-                            View
-                        </button>
-
-                        <button
-                            mat-stroked-button
-                            (click)="openEditDialog(person)"
-                        >
-                            Edit
-                        </button>
-
-                        <button
-                            mat-button
-                            class="delete-button"
-                            (click)="deletePerson(person)"
-                        >
-                            Delete
-                        </button>
-
-                    </div>
+                    <button type="button" class="action-button"
+                      matTooltip="Подробнее" aria-label="Подробнее о человеке"
+                      (click)="openViewDialog(person)">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                        <circle cx="12" cy="12" r="3" />
+                      </svg>
+                    </button>
+                    <button type="button" class="action-button"
+                      matTooltip="Изменить" aria-label="Изменить человека"
+                      (click)="openEditDialog(person)">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15Z" />
+                      </svg>
+                    </button>
+                    <button type="button" class="action-button delete-button"
+                      matTooltip="Удалить" aria-label="Удалить человека"
+                      (click)="deletePerson(person)">
+                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                        <path d="m7 7 10 10M17 7 7 17" />
+                      </svg>
+                    </button>
+                  </div>
 
                 </td>
 
@@ -251,6 +246,7 @@
 
 
     <mat-paginator
+      aria-label="Страницы списка людей"
       [length]="totalElements"
       [pageIndex]="page"
       [pageSize]="size"

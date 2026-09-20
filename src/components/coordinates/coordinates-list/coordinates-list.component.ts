@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { merge, Subscription } from 'rxjs';
+import { PersonWebsocketService } from '../../../service/person-websocket.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -26,13 +28,16 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
   templateUrl: './coordinates-list.component.html',
   styleUrl: './coordinates-list.component.css'
 })
-export class CoordinatesListComponent implements OnInit {
+export class CoordinatesListComponent implements OnInit, OnDestroy {
+
+  private websocketSubscription?: Subscription;
 
   coordinates: Coordinates[] = [];
 
   loading = false;
 
   constructor(
+    private websocketService: PersonWebsocketService,
     private coordinatesService: CoordinatesService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -40,6 +45,15 @@ export class CoordinatesListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCoordinates();
+    this.websocketSubscription = merge(
+      this.websocketService.coordinatesChanged$,
+      this.websocketService.connected$
+    ).subscribe(() => this.loadCoordinates());
+    this.websocketService.connect();
+  }
+
+  ngOnDestroy(): void {
+    this.websocketSubscription?.unsubscribe();
   }
 
   loadCoordinates(): void {
@@ -56,7 +70,7 @@ export class CoordinatesListComponent implements OnInit {
           this.loading = false;
 
           this.showError(
-            'Failed to load coordinates'
+            'Не удалось загрузить координаты'
           );
         }
       });
@@ -85,7 +99,7 @@ export class CoordinatesListComponent implements OnInit {
 
           error: () => {
             this.showError(
-              'Failed to create coordinates'
+              'Не удалось добавить координаты'
             );
           }
         });
@@ -109,11 +123,11 @@ export class CoordinatesListComponent implements OnInit {
         maxWidth: '95vw',
 
         data: {
-          title: 'Delete coordinates',
+          title: 'Удалить координаты',
           message:
-            `Are you sure you want to delete coordinates #${coordinatesId}?`,
-          confirmText: 'Delete',
-          cancelText: 'Cancel'
+            `Удалить координаты №${coordinatesId}?`,
+          confirmText: 'Удалить',
+          cancelText: 'Отмена'
         }
       }
     );
@@ -133,14 +147,13 @@ export class CoordinatesListComponent implements OnInit {
           error: error => {
             if (error.status === 409) {
               this.showError(
-                'Cannot delete coordinates because they are used by a person'
+                'Нельзя удалить координаты: они используются в записи о человеке'
               );
 
               return;
             }
-
             this.showError(
-              'Failed to delete coordinates'
+              'Не удалось удалить координаты'
             );
           }
         });
@@ -150,7 +163,7 @@ export class CoordinatesListComponent implements OnInit {
   private showError(message: string): void {
     this.snackBar.open(
       message,
-      'Close',
+      'Закрыть',
       {
         duration: 4000,
         horizontalPosition: 'right',

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { merge, Subscription } from 'rxjs';
+import { PersonWebsocketService } from '../../../service/person-websocket.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -26,13 +28,16 @@ import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.comp
   templateUrl: './location-list.component.html',
   styleUrl: './location-list.component.css'
 })
-export class LocationListComponent implements OnInit {
+export class LocationListComponent implements OnInit, OnDestroy {
+
+  private websocketSubscription?: Subscription;
 
   locations: Location[] = [];
 
   loading = false;
 
   constructor(
+    private websocketService: PersonWebsocketService,
     private locationService: LocationService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar
@@ -40,6 +45,15 @@ export class LocationListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadLocations();
+    this.websocketSubscription = merge(
+      this.websocketService.locationChanged$,
+      this.websocketService.connected$
+    ).subscribe(() => this.loadLocations());
+    this.websocketService.connect();
+  }
+
+  ngOnDestroy(): void {
+    this.websocketSubscription?.unsubscribe();
   }
 
   loadLocations(): void {
@@ -56,7 +70,7 @@ export class LocationListComponent implements OnInit {
           this.loading = false;
 
           this.showError(
-            'Failed to load locations'
+            'Не удалось загрузить местоположения'
           );
         }
       });
@@ -85,7 +99,7 @@ export class LocationListComponent implements OnInit {
 
           error: () => {
             this.showError(
-              'Failed to create location'
+              'Не удалось добавить местоположение'
             );
           }
         });
@@ -106,11 +120,11 @@ export class LocationListComponent implements OnInit {
         maxWidth: '95vw',
 
         data: {
-          title: 'Delete location',
+          title: 'Удалить местоположение',
           message:
-            `Are you sure you want to delete location #${locationId}?`,
-          confirmText: 'Delete',
-          cancelText: 'Cancel'
+            `Удалить местоположение №${locationId}?`,
+          confirmText: 'Удалить',
+          cancelText: 'Отмена'
         }
       }
     );
@@ -130,14 +144,14 @@ export class LocationListComponent implements OnInit {
           error: error => {
             if (error.status === 409) {
               this.showError(
-                'Cannot delete location because it is used by a person'
+                'Нельзя удалить местоположение: оно используется в записи о человеке'
               );
 
               return;
             }
 
             this.showError(
-              'Failed to delete location'
+              'Не удалось удалить местоположение'
             );
           }
         });
@@ -147,7 +161,7 @@ export class LocationListComponent implements OnInit {
   private showError(message: string): void {
     this.snackBar.open(
       message,
-      'Close',
+      'Закрыть',
       {
         duration: 4000,
         horizontalPosition: 'right',

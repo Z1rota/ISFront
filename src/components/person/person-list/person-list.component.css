@@ -26,12 +26,6 @@
   letter-spacing: -0.5px;
 }
 
-.subtitle {
-  margin: 6px 0 0;
-
-  font-size: 14px;
-  opacity: 0.65;
-}
 
 .create-button {
   min-width: 140px;
@@ -73,7 +67,7 @@
   min-width: 1300px;
 
   border-spacing: 0;
-  border-collapse: collapse;
+  border-collapse: separate;
 
   font-size: 14px;
 }
@@ -130,7 +124,7 @@
 }
 
 .actions-header {
-  text-align: right !important;
+  text-align: center !important;
 }
 
 .sortable {
@@ -178,7 +172,7 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: 6px;
+  gap: 4px;
 }
 
 .delete-button {
@@ -243,4 +237,56 @@ mat-paginator {
     width: 100%;
   }
 
+}
+.action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 7px;
+  background: var(--mat-sys-surface-container-high);
+  color: var(--mat-sys-primary);
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.action-button:hover {
+  background: var(--mat-sys-secondary-container);
+}
+
+.action-button:focus-visible {
+  outline: 2px solid var(--mat-sys-primary);
+  outline-offset: 2px;
+}
+
+.action-button.delete-button:hover {
+  color: var(--mat-sys-error);
+}
+
+.action-button svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.person-table .actions-header,
+.person-table .actions-cell {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  width: 136px;
+  background: var(--mat-sys-surface);
+  box-shadow: -8px 0 12px -8px #000, -1px 0 var(--mat-sys-outline-variant);
+}
+
+.person-table .actions-header {
+  background: var(--mat-sys-surface-container);
 }
