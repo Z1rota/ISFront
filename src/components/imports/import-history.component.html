@@ -1,0 +1,57 @@
+<mat-card [attr.aria-busy]="loading">
+  <mat-card-header>
+    <mat-card-title
+      ><h2>
+        {{ allUsers ? 'История всех пользователей' : 'Моя история импорта' }}
+      </h2></mat-card-title
+    >
+    <button mat-button type="button" (click)="refresh()" [disabled]="loading">Обновить</button>
+  </mat-card-header>
+  @if (loading) {
+    <mat-progress-bar mode="indeterminate" aria-label="Загрузка истории" />
+  }
+  @if (errorMessage) {
+    <p class="state-message error" role="alert">{{ errorMessage }}</p>
+  } @else if (!history.length) {
+    <p class="state-message" role="status">
+      {{ loading ? 'Загрузка истории...' : 'Операций импорта пока нет' }}
+    </p>
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <caption class="visually-hidden">
+          {{
+            allUsers ? 'История всех пользователей' : 'Моя история импорта'
+          }}
+        </caption>
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Пользователь</th>
+            <th scope="col">Добавлено объектов</th>
+            <th scope="col">Дата операции</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (operation of history; track operation.id) {
+            <tr>
+              <td>{{ operation.id }}</td>
+              <td>
+                <span
+                  class="status"
+                  [class.failed]="operation.status === 'FAILED'"
+                  [class.pending]="operation.status === 'IN_PROGRESS'"
+                  >{{ statusLabels[operation.status] }}</span
+                >
+              </td>
+              <td>{{ operation.username }}</td>
+              <td>{{ operation.addedCount ?? '\u2014' }}</td>
+              <td>{{ operation.createdAt | date: 'dd.MM.yyyy HH:mm:ss' }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</mat-card>

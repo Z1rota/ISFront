@@ -1,0 +1,49 @@
+<div class="page">
+  <h1>Импорт</h1>
+  <mat-card [attr.aria-busy]="loading">
+    <mat-card-content>
+      <h2>Загрузка Person из CSV</h2>
+      <p>
+        Выберите CSV в кодировке UTF-8 с разделителем «;». Поля eyeColor и nationality могут быть
+        пустыми.
+      </p>
+      <details>
+        <summary>Формат и пример файла</summary>
+        <pre>
+name;coordinatesX;coordinatesY;eyeColor;hairColor;locationX;locationY;locationZ;height;nationality
+Ivan;10;20;GREEN;BLACK;1.5;2.5;3.5;180;RUSSIA
+Petr;30;40;;BROWN;5;6;7;175;</pre>
+      </details>
+      <div class="file-actions">
+        <input
+          #fileInput
+          type="file"
+          accept=".csv"
+          hidden
+          [disabled]="loading"
+          (change)="selectFile(fileInput)"
+        />
+        <button mat-stroked-button type="button" [disabled]="loading" (click)="fileInput.click()">
+          Выбрать CSV
+        </button>
+        <span class="file-name" role="status">{{ selectedFile?.name ?? 'Файл не выбран' }}</span>
+        <button
+          mat-flat-button
+          type="button"
+          [disabled]="!selectedFile || loading"
+          (click)="importFile(fileInput)"
+        >
+          {{ loading ? 'Импортирование...' : 'Импортировать' }}
+        </button>
+      </div>
+      @if (errorMessage) {
+        <p class="import-error" role="alert">{{ errorMessage }}</p>
+      }
+      @if (loading) {
+        <mat-progress-bar mode="indeterminate" aria-label="Импортирование файла" />
+      }
+    </mat-card-content>
+  </mat-card>
+  <app-import-history [allUsers]="false" />
+  <router-outlet />
+</div>

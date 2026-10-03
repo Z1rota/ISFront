@@ -1,0 +1,64 @@
+.page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 600;
+}
+h2 {
+  margin-top: 8px;
+  font-size: 20px;
+}
+mat-card {
+  border: 1px solid var(--mat-sys-outline-variant);
+}
+p {
+  color: var(--mat-sys-on-surface-variant);
+  line-height: 1.6;
+}
+summary {
+  cursor: pointer;
+}
+pre {
+  overflow-x: auto;
+  padding: 16px;
+  background: var(--mat-sys-surface-container);
+  font-size: 13px;
+  line-height: 1.6;
+}
+.file-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0 8px;
+}
+.file-name {
+  flex: 1;
+  min-width: 120px;
+  overflow-wrap: anywhere;
+}
+mat-progress-bar {
+  margin-top: 16px;
+}
+.import-error {
+  margin: 16px 0 0;
+  color: var(--mat-sys-error);
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+@media (max-width: 700px) {
+  .page {
+    padding: 20px;
+  }
+  .file-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

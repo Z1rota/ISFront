@@ -1,46 +1,28 @@
-<mat-toolbar class="app-toolbar">
+@if (authService.isAuthenticated()) {
+  <mat-toolbar class="app-toolbar">
+    <div class="brand">Информационные Системы</div>
 
-  <div class="brand">
-    Информационные Системы
-  </div>
+    <nav class="navigation">
+      <a mat-button routerLink="/persons" routerLinkActive="active-link"> Люди </a>
 
-  <nav class="navigation">
+      <a mat-button routerLink="/coordinates" routerLinkActive="active-link"> Координаты </a>
 
-    <a
-      mat-button
-      routerLink="/persons"
-      routerLinkActive="active-link"
-    >
-      Люди
-    </a>
+      <a mat-button routerLink="/locations" routerLinkActive="active-link"> Местоположения </a>
 
-    <a
-      mat-button
-      routerLink="/coordinates"
-      routerLinkActive="active-link"
-    >
-      Координаты
-    </a>
+      <a mat-button routerLink="/special" routerLinkActive="active-link"> Специальные операции </a>
 
-    <a
-      mat-button
-      routerLink="/locations"
-      routerLinkActive="active-link"
-    >
-      Местоположения
-    </a>
+      <a mat-button routerLink="/imports" routerLinkActive="active-link">Импорт</a>
+    </nav>
 
-    <a
-      mat-button
-      routerLink="/special"
-      routerLinkActive="active-link"
-    >
-      Специальные операции
-    </a>
-
-  </nav>
-
-</mat-toolbar>
+    <div class="account">
+      <span class="username">{{ authService.username }}</span>
+      @if (authService.isAdmin()) {
+        <span class="role">ADMIN</span>
+      }
+      <button mat-button type="button" (click)="authService.logout()">Выйти</button>
+    </div>
+  </mat-toolbar>
+}
 
 <main>
   <router-outlet />
